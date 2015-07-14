@@ -168,6 +168,9 @@ function get_stylesheet() {
  * @return string Path to current theme directory.
  */
 function get_stylesheet_directory() {
+	//adapt d3cms template format
+	if(!empty(Helper_Wordpress::$media_directory))return Helper_Wordpress::$media_directory;
+
 	$stylesheet = get_stylesheet();
 	$theme_root = get_theme_root( $stylesheet );
 	$stylesheet_dir = "$theme_root/$stylesheet";
@@ -300,6 +303,9 @@ function get_template() {
  * @return string Template directory path.
  */
 function get_template_directory() {
+	//adapt d3cms template format
+	if(!empty(Helper_Wordpress::$template_directory))return Helper_Wordpress::$template_directory;
+
 	$template = get_template();
 	$theme_root = get_theme_root( $template );
 	$template_dir = "$theme_root/$template";
@@ -314,6 +320,7 @@ function get_template_directory() {
 	 * @param string $theme_root   Absolute path to the themes directory.
 	 */
 	return apply_filters( 'template_directory', $template_dir, $template, $theme_root );
+
 }
 
 /**
