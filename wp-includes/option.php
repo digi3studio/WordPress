@@ -25,6 +25,10 @@
  * @return mixed Value set for the option.
  */
 function get_option( $option, $default = false ) {
+	if(('home' == $option || 'siteurl' == $option) && !is_null(Helper_Wordpress::$city)){
+		return preg_replace('/\/$/i','',URL::site('',TRUE));
+	}
+
 	global $wpdb;
 
 	$option = trim( $option );

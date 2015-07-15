@@ -2879,6 +2879,10 @@ function get_admin_url( $blog_id = null, $path = '', $scheme = 'admin' ) {
 function includes_url( $path = '', $scheme = null ) {
 	$url = site_url( '/' . WPINC . '/', $scheme );
 
+	if(Helper_Wordpress::$city){
+		$url = site_url('/modules/d3wordpress/vendor/wordpress/'.WPINC.'/', $scheme);
+	}
+
 	if ( $path && is_string( $path ) )
 		$url .= ltrim($path, '/');
 

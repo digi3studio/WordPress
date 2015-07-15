@@ -113,7 +113,13 @@ function wp_initial_constants() {
  */
 function wp_plugin_directory_constants() {
 	if ( !defined('WP_CONTENT_URL') )
-		define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content'); // full url - WP_CONTENT_DIR is defined further up
+		if(!is_null(Helper_Wordpress::$media_directory)){
+			define( 'WP_CONTENT_URL', url::site(Helper_Wordpress::$media_directory,TRUE));
+		}else{
+			define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content'); // full url - WP_CONTENT_DIR is defined further up
+		}
+
+
 
 	/**
 	 * Allows for the plugins directory to be moved from the default location.

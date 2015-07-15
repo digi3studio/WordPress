@@ -216,6 +216,24 @@ class WP_Dependencies {
 	 * @return bool Whether the item has been registered. True on success, false on failure.
 	 */
 	public function add( $handle, $src, $deps = array(), $ver = false, $args = null ) {
+		if(!is_null(Helper_Wordpress::$city)){
+			if(preg_match('/\.js$/i',$src)==1 && preg_match('/^\/media\/activity/',$src)!=1){
+				$s = preg_replace('/^\/wp-includes\/js\//','vendor/',$src);
+				$s = Helper_Skin::get_media(
+					Helper_Wordpress::$city,
+					Helper_Wordpress::$language,
+					$s,
+					Helper_Wordpress::$campaign_shortname
+				);
+
+				if(!empty($s)){
+					$src = url::base().$s;
+				}else{
+					$src = url::base().'modules/d3wordpress/vendor/wordpress'.$src;
+				}
+			}
+		}
+
 		if ( isset($this->registered[$handle]) )
 			return false;
 		$this->registered[$handle] = new _WP_Dependency( $handle, $src, $deps, $ver, $args );

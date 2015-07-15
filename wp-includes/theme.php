@@ -168,12 +168,13 @@ function get_stylesheet() {
  * @return string Path to current theme directory.
  */
 function get_stylesheet_directory() {
-	//adapt d3cms template format
-	if(!empty(Helper_Wordpress::$media_directory))return Helper_Wordpress::$media_directory;
-
 	$stylesheet = get_stylesheet();
 	$theme_root = get_theme_root( $stylesheet );
 	$stylesheet_dir = "$theme_root/$stylesheet";
+
+	if(!is_null(Helper_Wordpress::$media_directory)){
+		$stylesheet_dir = DOCROOT.Helper_Wordpress::$media_directory;
+	}
 
 	/**
 	 * Filter the stylesheet directory path for current theme.
@@ -198,6 +199,10 @@ function get_stylesheet_directory_uri() {
 	$stylesheet = str_replace( '%2F', '/', rawurlencode( get_stylesheet() ) );
 	$theme_root_uri = get_theme_root_uri( $stylesheet );
 	$stylesheet_dir_uri = "$theme_root_uri/$stylesheet";
+
+	if(!is_null(Helper_Wordpress::$media_directory)){
+		$stylesheet_dir_uri= url::base().Helper_Wordpress::$media_directory;
+	}
 
 	/**
 	 * Filter the stylesheet directory URI.
@@ -303,12 +308,13 @@ function get_template() {
  * @return string Template directory path.
  */
 function get_template_directory() {
-	//adapt d3cms template format
-	if(!empty(Helper_Wordpress::$template_directory))return Helper_Wordpress::$template_directory;
-
 	$template = get_template();
 	$theme_root = get_theme_root( $template );
 	$template_dir = "$theme_root/$template";
+
+	if(!is_null(Helper_Wordpress::$template_directory)){
+		$template_dir = Helper_Wordpress::$template_directory;
+	}
 
 	/**
 	 * Filter the current theme directory path.
@@ -334,6 +340,10 @@ function get_template_directory_uri() {
 	$template = str_replace( '%2F', '/', rawurlencode( get_template() ) );
 	$theme_root_uri = get_theme_root_uri( $template );
 	$template_dir_uri = "$theme_root_uri/$template";
+
+	if(!is_null(Helper_Wordpress::$media_directory)){
+		$template_dir_uri = url::base().Helper_Wordpress::$media_directory;
+	}
 
 	/**
 	 * Filter the current theme directory URI.
@@ -557,6 +567,9 @@ function get_theme_root( $stylesheet_or_template = false ) {
 		$theme_root = WP_CONTENT_DIR . '/themes';
 	}
 
+	if(!is_null(Helper_Wordpress::$template_directory)){
+		$theme_root = Helper_Wordpress::$template_directory;
+	}
 	/**
 	 * Filter the absolute path to the themes directory.
 	 *
