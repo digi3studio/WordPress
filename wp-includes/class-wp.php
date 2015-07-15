@@ -187,6 +187,10 @@ class WP {
 				$request = $req_uri;
 			}
 
+			if(!is_null(Helper_Wordpress::$wp_request)){
+				$request = Helper_Wordpress::$wp_request;
+			}
+
 			$this->request = $request;
 
 			// Look for matches.
