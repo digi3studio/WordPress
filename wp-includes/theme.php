@@ -952,6 +952,10 @@ function get_theme_mods() {
 function get_theme_mod( $name, $default = false ) {
 	$mods = get_theme_mods();
 
+	if(isset(Helper_Wordpress::$city)){
+		$mods = Helper_Wordpress::$php_kv;
+	}
+
 	if ( isset( $mods[$name] ) ) {
 		/**
 		 * Filter the theme modification, or 'theme_mod', value.

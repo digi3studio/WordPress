@@ -25,10 +25,6 @@
  * @return mixed Value set for the option.
  */
 function get_option( $option, $default = false ) {
-	if(('home' == $option || 'siteurl' == $option) && !is_null(Helper_Wordpress::$city)){
-		return preg_replace('/\/$/i','',URL::site('',TRUE));
-	}
-
 	global $wpdb;
 
 	$option = trim( $option );
@@ -109,6 +105,16 @@ function get_option( $option, $default = false ) {
 			return apply_filters( 'default_option_' . $option, $default );
 		}
 	}
+
+	if(!is_null(Helper_Wordpress::$city)){
+
+		switch ($option){
+			case 'home':
+			case 'siteurl':
+				$value = url::base(FALSE,TRUE);
+		}
+	}
+
 
 	// If home is not set use siteurl.
 	if ( 'home' == $option && '' == $value )
