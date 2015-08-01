@@ -229,7 +229,9 @@ class WP_Dependencies {
 				if(!empty($s)){
 					$src = url::base().$s;
 				}else{
-					$src = url::base().'modules/d3wordpress/vendor/wordpress'.$src;
+					if(!preg_match('/^http/i',$src)){
+						$src = url::base().'modules/d3wordpress/vendor/wordpress'.$src;
+					}
 				}
 			}
 		}
